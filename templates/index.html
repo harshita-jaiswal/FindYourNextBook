@@ -36,7 +36,6 @@
 			font-weight: 500;
 		}
 		.header-item:hover {
-			/* text-shadow: 1px 1px 2px #000000; */
 			font-weight: 600;
 			transition: font-weight 0.5s;
 		}
@@ -51,18 +50,13 @@
 			object-fit: cover;
 		}
 		.nextBtn {
-			/* background-color: #f0e1e1; */
-			/* background-color: rgba(78,77,68,0.5); */
 			top: 43%;
 			left: 42%;
 			opacity: 0.85;
 			position: absolute;
-			/* border-radius: 8px; */
 			cursor: pointer;
 			box-shadow: 0px 0px 6px 22px rgb(0 0 0 / 75%);
-
 			background-color: rgba(0,0,0,.75);
-			/* border-radius: 4px; */
 			box-sizing: border-box;
 		}
 		.nextBtn:hover {
@@ -91,22 +85,14 @@
 			margin-top: 40px;
 		}
 		 .card {
-			/* width: 250px; */
 			height: 100%;
 			margin-bottom: 15px;
 		} 
 		.card-body {
-			/* padding: 18px 20px; */
 			display: flex;
 			flex-direction: column;
 			justify-content: space-evenly;
 		}
-		/*.card-image {
-			width: 210px;
-		} */
-		/* height: 260px;
-		width: 260px;
-		object-fit: contain; */
 		.card-img-top {
 			max-height: 250px;
 		}
@@ -165,13 +151,6 @@
 							  <p class="card-text">{{ book_author[i] }}</p>
 							</div>
 						  </div>
-						<!-- <div class="card">
-							<div class="card-body">
-								<img src="{{ book_image[i] }}" alt="" class="card-image" />
-								<h4>{{ book_name[i] }}</h4>
-								<h6>{{ book_author[i] }}</h6>
-							</div>
-						</div> -->
 					</div>
 					{% endfor %}
 			</div>

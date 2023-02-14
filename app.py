@@ -14,5 +14,16 @@ def index():
     book_image = list(top_100_books['Image-URL-M'].values)
     )
 
+@app.route('/recommend')
+def recommend_ui():
+    return render_template('searchBooks.html')
+
+@app.route('/recommend_books',methods=['post'])
+def recommend():
+    user_input = request.form.get('user_input')
+    print(user_input)
+
+    return render_template('searchBooks.html')
+
 # if __name__== '__main__':
 app.run(debug=True)

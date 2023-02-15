@@ -2,7 +2,7 @@ from flask import Flask,render_template, request
 import pickle
 import numpy as np
 
-top_50_books = pickle.load(open('top_books.pkl', 'rb'))
+top_books = pickle.load(open('top_books.pkl', 'rb'))
 
 app = Flask(__name__)
 

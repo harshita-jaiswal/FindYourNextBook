@@ -16,7 +16,8 @@
 		body {
 			height: 100vh;
 		}
-		a, p {
+		a,
+		p {
 			text-decoration: none;
 			all: unset;
 		}
@@ -56,7 +57,7 @@
 			position: absolute;
 			cursor: pointer;
 			box-shadow: 0px 0px 6px 22px rgb(0 0 0 / 75%);
-			background-color: rgba(0,0,0,.75);
+			background-color: rgba(0, 0, 0, 0.75);
 			box-sizing: border-box;
 		}
 		.nextBtn:hover {
@@ -68,7 +69,7 @@
 			padding: 15px 25px;
 			margin: 0;
 			font-size: 26px;
-    		font-weight: 600;
+			font-weight: 600;
 			color: #ffffff;
 		}
 		.topBooks {
@@ -84,10 +85,10 @@
 		.row {
 			margin-top: 40px;
 		}
-		 .card {
+		.card {
 			height: 100%;
 			margin-bottom: 15px;
-		} 
+		}
 		.card-body {
 			display: flex;
 			flex-direction: column;
@@ -130,33 +131,34 @@
 				<a class="header-link" href="/recommend">Search</a>
 			</p>
 			<p class="header-item">
-				<a class="header-link" href="#top100Books">Top 100 Books</a>
+				<a class="header-link" href="#top50Books">Top 50 Books</a>
 			</p>
 		</div>
 		<div class="banner">
-			<img class="bannerImg" src="https://media.npr.org/assets/img/2022/11/19/bwl-fall-2022_wide-65b02ab152bdfc3add9804216881bb2605776498.jpg?s=700&c=85&f=jpeg" />
+			<img
+				class="bannerImg"
+				src="https://media.npr.org/assets/img/2022/11/19/bwl-fall-2022_wide-65b02ab152bdfc3add9804216881bb2605776498.jpg?s=700&c=85&f=jpeg"
+			/>
 			<div class="nextBtn">
 				<a class="btnText" href="/recommend">Find Your Next Book</a>
 			</div>
 		</div>
 		<div id="top100Books" class="topBooks">
-			<div class="title">Top 100 Books</div>
+			<div class="title">Top 50 Books</div>
 			<div class="row">
-					{% for i in range(book_name|length) %}
-					<div class="col-3">
-						<div class="card" style="width: 18rem;">
-							<img src="{{ book_image[i] }}" class="card-img-top" alt="...">
-							<div class="card-body">
-							  <p class="card-title">{{ book_name[i] }}</p>
-							  <p class="card-text">{{ book_author[i] }}</p>
-							</div>
-						  </div>
+				{% for i in range(book_name|length) %}
+				<div class="col-3">
+					<div class="card" style="width: 18rem">
+						<img src="{{ book_image[i] }}" class="card-img-top" alt="..." />
+						<div class="card-body">
+							<p class="card-title">{{ book_name[i] }}</p>
+							<p class="card-text">{{ book_author[i] }}</p>
+						</div>
 					</div>
-					{% endfor %}
+				</div>
+				{% endfor %}
 			</div>
-			<div class="seeMore">
-				See More
-			</div>
+			<!--<div class="seeMore">See More</div>--->
 		</div>
 	</body>
 </html>

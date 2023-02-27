@@ -1,6 +1,7 @@
 from flask import Flask,render_template, request
 import pickle
 import numpy as np
+from recommendations import getBooksYearly
 
 top_books = pickle.load(open('top_books.pkl', 'rb'))
 
@@ -21,8 +22,12 @@ def recommend_ui():
 @app.route('/recommend_books',methods=['post'])
 def recommend():
     user_input = request.form.get('user_input')
-    print(user_input)
-
+    year = request.form.get('user_input')
+    same_year_books = getBooksYearly(year)
+    print(year)
+    print(same_year_books)
+    
+    
     return render_template('searchBooks.html')
 
 # if __name__== '__main__':

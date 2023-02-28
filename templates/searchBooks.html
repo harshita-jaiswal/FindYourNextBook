@@ -60,13 +60,13 @@
 				</div>
 			</div>
 
-			{% if same_year_books %} {% for i in same_year_books %}
+			{% if same_year_books %} {% for book in same_year_books %}
 			<div class="col-md-3" style="margin-top: 50px">
 				<div class="card">
 					<div class="card-body">
-						<img class="card-img-top" src="{{i[2]}}" />
-						<p class="text-white">{{i[0]}}</p>
-						<h4 class="text-white">{{i[1]}}</h4>
+						<img class="card-img-top" src="{{book[2]}}" />
+						<p class="card-title">{{book[0]}}</p>
+						<p class="card-title">{{book[1]}}</p>
 					</div>
 				</div>
 			</div>

@@ -378,23 +378,14 @@ def getBooksYearly(year):
         same_year_books = df_recommendation_dataset[df_recommendation_dataset['Year-Of-Publication'] == year]
         #top 5 rated books
         same_year_books = same_year_books.sort_values(by = "Book-Rating", ascending=False)[:5]
-
-        yearly_data = []
-        for i in same_year_books:
-            item = []
-            item.extend(list(same_year_books.drop_duplicates('Book-Title')['Book-Title'].values))
-            item.extend(list(same_year_books.drop_duplicates('Book-Title')['Book-Author'].values))
-            item.extend(list(same_year_books.drop_duplicates('Book-Title')['Image-URL-M'].values))
-
-            yearly_data.append(item)
-
+        if (len(same_year_books) == 0):
+            return "No books found in this year!"
         return list(zip(same_year_books['Book-Title'], same_year_books['Book-Author'], same_year_books['Image-URL-M']))
-    
     else:
         return "Invalid year!"
 
 
 # %%
-getBooksYearly(2000)
+getBooksYearly(1980)
 
 

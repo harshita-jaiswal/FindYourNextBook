@@ -291,26 +291,48 @@ df_author_recommendations = df_author_recommendations.merge(df_books,on='Book-Ti
 df_author_recommendations=df_author_recommendations.sort_values('Aggregated-Rating',ascending=False)
 
 # %%
-#books by same author
-#bookname = input()
-#Harry Potter and the Chamber of Secrets (Book 2)
-#dataframe_books = df_author_recommendations[df_author_recommendations['Book-Title'] == bookname]
-#book_author = dataframe_books['Book-Author']
-#author_name = book_author.to_string(index=False)
-#author_recommnedations = df_author_recommendations.loc[df_author_recommendations['Book-Author'] == author_name,:][:6]
-#author_recommnedations.drop(author_recommnedations.index[author_recommnedations['Book-Title'] == bookname], inplace = True)
-#author_recommnedations
+#Helper method to create books in custom list from dataframe
+def create_book_lists_helper(books):
+    recommended_books = []
+    for book in books.values.tolist():
+        suggested = []
+        suggested.append(book[0])
+        suggested.append(book[5])
+        suggested.append(book[8])
+        recommended_books.append(suggested)
+    return recommended_books
 
 # %%
-#books by same publisher
-#bookname = input()
-#Harry Potter and the Chamber of Secrets (Book 2)
-#dataframe_books = df_author_recommendations[df_author_recommendations['Book-Title'] == bookname]
-#book_publisher = dataframe_books['Publisher']
-#publisher_name = book_publisher.to_string(index=False)
-#publisher_recommnedations = df_author_recommendations.loc[df_author_recommendations['Publisher'] == publisher_name,:][:6]
-#publisher_recommnedations.drop(publisher_recommnedations.index[publisher_recommnedations['Book-Title'] == bookname], inplace = True)
-#publisher_recommnedations
+#Recommend books by same author of the book with bookname as an input  
+def recommendation_by_same_author(bookname):
+    book_entry = df_author_recommendations[df_author_recommendations['Book-Title'] == bookname]
+    if book_entry.empty:
+        return "No books found with the input title!"
+    book_author = book_entry['Book-Author']
+    author_name = book_author.to_string(index=False)
+    author_recommendations = df_author_recommendations.loc[df_author_recommendations['Book-Author'] == author_name,:][:6]
+    author_recommendations.drop(author_recommendations.index[author_recommendations['Book-Title'] == bookname], inplace = True)
+    if author_recommendations.empty:
+        return "No books found with the author of the input title!"
+    return create_book_lists_helper(author_recommendations)
+
+# %%
+print(recommendation_by_same_author("Harry Potter and the Chamber of Secrets"))
+# %%
+def recommendation_by_same_publisher(bookname):
+    book_entry = df_author_recommendations[df_author_recommendations['Book-Title'] == bookname]
+    if book_entry.empty:
+        return "No books found with the input title!"
+    book_publisher = book_entry['Publisher']
+    publisher_name = book_publisher.to_string(index=False)
+    publisher_recommendations = df_author_recommendations.loc[df_author_recommendations['Publisher'] == publisher_name,:][:6]
+    publisher_recommendations.drop(publisher_recommendations.index[publisher_recommendations['Book-Title'] == bookname], inplace = True)
+    if publisher_recommendations.empty:
+        return "No books found with the publisher of the input title!"
+    return create_book_lists_helper(publisher_recommendations) 
+
+#%%
+print(recommendation_by_same_publisher("Harry Potter and the Chamber of Secrets"))
 
 # %% [markdown]
 # ## collaborative filtering

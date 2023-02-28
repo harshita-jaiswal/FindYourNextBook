@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 from recommendations import getBooksYearlyByName
-from recommendations import getBooksYearlyByYear
+
 
 top_books = pickle.load(open('top_books.pkl', 'rb'))
 
@@ -24,11 +24,14 @@ def recommend_ui():
 @app.route('/recommend_books',methods=['post'])
 def recommend():
     #TAKE INPUT: bookname
-    #display: similar books(rutuja), author, publisher, year, places
+    #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
 
     user_input = request.form.get('user_input')
     book_name = request.form.get('user_input')
+    year = request.form.get('user_input')
     same_year_books_by_name = getBooksYearlyByName(book_name)
+    
+
     print(book_name)
     print(same_year_books_by_name)
 

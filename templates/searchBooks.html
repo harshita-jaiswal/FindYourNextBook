@@ -44,7 +44,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h1 class="text-white" style="font-size: 50px">Recommend Books</h1>
-					<form action="/recommend_books" method="post">
+					<form class="form" action="/recommend_books" method="post">
 						<input
 							id="user_input"
 							name="user_input"
@@ -59,23 +59,33 @@
 					</form>
 				</div>
 			</div>
-
-			{% if same_year_books %} {% for book in same_year_books %}
-			<div class="col-md-3" style="margin-top: 50px">
-				<div class="card">
-					<div class="card-body">
-						<img class="card-img-top" src="{{book[2]}}" />
-						<p class="card-title">{{book[0]}}</p>
-						<p class="card-title">{{book[1]}}</p>
+			<div class="title">
+				<h2 class="recommendation-title"></h2>
+				{% if same_year_books_by_name %} {% for book in same_year_books_by_name
+				%}
+				<div class="col-md-3" style="margin-top: 50px">
+					<div class="card">
+						<div class="card-body">
+							<img class="card-img-top" src="{{book[2]}}" />
+							<p class="card-title">{{book[0]}}</p>
+							<p class="card-title">{{book[1]}}</p>
+						</div>
 					</div>
 				</div>
+				{% endfor %} {% endif %}
 			</div>
-			{% endfor %} {% endif %}
 		</div>
 	</body>
 	<script>
+		const form = document.getElementById("form");
+		form.addEventListener("submit", submitForm);
+
 		let user_input = document.querySelector("#user_input");
-		let title = document.createElement("div");
-		title.textContent = `Books published in ${user_input.value}`;
+		let divElement = document.querySelector(".title");
+		let title = document.querySelector(".recommendation-title");
+		title.textContent = `Books published in the same year`;
+		function submitForm() {
+			divElement.appendChild(title);
+		}
 	</script>
 </html>

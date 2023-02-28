@@ -371,21 +371,32 @@ pickle.dump(df_books,open('books.pkl', 'wb'))
 # ## Books Published Yearly
 
 # %%
-def getBooksYearly(year):
+def getBooksYearlyByName(book_name):
+    same_year_books_bookname = df_recommendation_dataset[df_recommendation_dataset['Book-Title'].str.lower().str.contains(book_name.lower())]
+    if same_year_books_bookname.empty:
+        return "No books found with that title!"
+    else:
+        year = same_year_books_bookname.iloc[0]['Year-Of-Publication']
+        same_year_books_bookname = df_recommendation_dataset[df_recommendation_dataset['Year-Of-Publication'] == year]
+        same_year_books_bookname = same_year_books_bookname.sort_values(by = "Book-Rating", ascending=False)[:5]
+        if (len(same_year_books_bookname)==0):
+            return "No books found in the same year!"
+        same_year_books_bookname = same_year_books_bookname.drop_duplicates(subset=["Book-Title"])
+        return list(zip(same_year_books_bookname['Book-Title'], same_year_books_bookname['Book-Author'], same_year_books_bookname['Image-URL-M']))
+
+# %%
+def getBooksYearlyByYear(year):
     year = int(year)
     user_year = ((df_recommendation_dataset['Year-Of-Publication'] == year))
     if user_year.any(): 
-        same_year_books = df_recommendation_dataset[df_recommendation_dataset['Year-Of-Publication'] == year]
+        same_year_books_ = df_recommendation_dataset[df_recommendation_dataset['Year-Of-Publication'] == year]
         #top 5 rated books
         same_year_books = same_year_books.sort_values(by = "Book-Rating", ascending=False)[:5]
         if (len(same_year_books) == 0):
             return "No books found in this year!"
+        same_year_books = same_year_books.drop_duplicates(subset=["Book-Title"])
         return list(zip(same_year_books['Book-Title'], same_year_books['Book-Author'], same_year_books['Image-URL-M']))
     else:
         return "Invalid year!"
-
-
-# %%
-getBooksYearly(1980)
 
 

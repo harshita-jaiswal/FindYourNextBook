@@ -382,7 +382,13 @@ def getBooksYearlyByName(book_name):
         if (len(same_year_books_bookname)==0):
             return "No books found in the same year!"
         same_year_books_bookname = same_year_books_bookname.drop_duplicates(subset=["Book-Title"])
-        return list(zip(same_year_books_bookname['Book-Title'], same_year_books_bookname['Book-Author'], same_year_books_bookname['Image-URL-M']))
+        same_year_books_bookname = list(zip(same_year_books_bookname['Book-Title'], same_year_books_bookname['Book-Author'], same_year_books_bookname['Image-URL-M']))
+        message = f"<h1>Books in the same year</h1>"
+        result = {"title": message,"books":same_year_books_bookname}
+        return result
+
+# %%
+getBooksYearlyByName("HARRY POTTER")
 
 # %%
 def getBooksYearlyByYear(year):

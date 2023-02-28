@@ -23,9 +23,14 @@ def recommend_ui():
 
 @app.route('/recommend_books',methods=['post'])
 def recommend():
+    #TAKE INPUT: bookname
+    #display: similar books(rutuja), author, publisher, year, places
+
     user_input = request.form.get('user_input')
     book_name = request.form.get('user_input')
     same_year_books_by_name = getBooksYearlyByName(book_name)
+    print(book_name)
+    print(same_year_books_by_name)
 
     return render_template('searchBooks.html', same_year_books_by_name=same_year_books_by_name)
 

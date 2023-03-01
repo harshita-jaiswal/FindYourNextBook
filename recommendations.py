@@ -571,7 +571,7 @@ def getAllRecommendations(bookname):
     return results_in_json(finalRecommendations)
 
 # %%
-print(getAllRecommendations("The Handmaid's Ta"))
+#print(getAllRecommendations("The Handmaid's Ta"))
 
 # %%
 

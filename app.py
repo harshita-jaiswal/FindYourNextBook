@@ -191,6 +191,7 @@ def recommend():
     #print(all_books)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     # allResults = getAllRecommendations('1984')
     # print('allResults-------',allResults)
@@ -201,6 +202,14 @@ def recommend():
     print(allResults)
     return render_template('searchBooks.html')
 >>>>>>> 4956f03 (Add exception handling for no results)
+=======
+    bookName = request.form.get('user_input')
+    #print(bookName)
+    if len(str(bookName)) == 0:   
+        return render_template('searchBooks.html')
+    allResults = getAllRecommendations(bookName)
+    return allResults
+>>>>>>> 5e8f682 (Add response to frontend)
 
-# if __name__== '__main__':
-app.run(debug=True)
+if __name__== '__main__':
+    app.run(debug=True)

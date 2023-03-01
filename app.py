@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 from recommendations import getBooksYearly
-
+from recommendations import samePlaceBooks
 
 top_books = pickle.load(open('top_books.pkl', 'rb'))
 
@@ -26,13 +26,20 @@ def recommend():
     #TAKE INPUT: bookname
     #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
 
+    #year data
     year_or_book = request.form.get("user_input")
     same_year_books = getBooksYearly(year_or_book)
 
-    print(year_or_book)
-    print(same_year_books)
+    #places data
+    place = request.form.get("user-input")
+    same_place_books = samePlaceBooks(place)
 
-    return render_template('searchBooks.html', same_year_books_by_name=same_year_books_by_name)
+    #result
+    all_books = []
+    all_books.append(same_year_books)
+    all_books.append(same_place_books)
+    print(all_books)
+    return render_template('searchBooks.html')
 
 # if __name__== '__main__':
 app.run(debug=True)

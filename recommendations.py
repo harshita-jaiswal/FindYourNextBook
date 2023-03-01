@@ -403,12 +403,46 @@ def getBooksYearly(year_or_book: int or str):
     
     #dropping the duplicates
     same_year_books = same_year_books.drop_duplicates(subset=["Book-Title"])
-    same_year_books = list(zip(same_year_books['Book-Title'], same_year_books['Book-Author'], same_year_books['Image-URL-M']))
+    result_books = []
+    for i, book in same_year_books.iterrows():
+        books_dict = {"book-name": book["Book-Title"], "book-author": book["Book-Author"], "book-image": book["Image-URL-M"]}
+        result_books.append(books_dict)
     title = "Trending books in the same year"
 
     #result books 
-    result_same_year_books = {"title": title, "result_books": same_year_books}
+    result_same_year_books = {"title": title, "result_books": result_books}
     return result_same_year_books
+
+
+# %% [markdown]
+# ## Books published at the given place
+
+# %%
+def samePlaceBooks(place):
+    if place is not None:
+        place = place.lower()
+    
+    places = ((df_recommendation_dataset['City'].str.lower() == place) |
+            (df_recommendation_dataset['State'].str.lower() == place) |
+            (df_recommendation_dataset['Country'].str.lower() == place))
+    
+    if places.any():
+        same_place_books = df_recommendation_dataset[places]
+        #top 5 rated books
+        same_place_books = same_place_books.sort_values(by = "Book-Rating", ascending=False)[:5]
+        same_place_books = same_place_books.drop_duplicates(subset=["Book-Title"])
+        result_books = []
+        for i, book in same_place_books.iterrows():
+            book_dict = {"book-name": book["Book-Title"], "book-author": book["Book-Author"], "book-image": book["Image-URL-M"]}
+            result_books.append(book_dict)
+    
+        title = "Trending books at the same location"
+
+        #result books 
+        result_same_year_books = {"title": title, "result_books": result_books}
+        return result_same_year_books
+    else:
+        return "Invalid Entry"
 
 
 

@@ -12,6 +12,42 @@
 		/>
 	</head>
 	<style>
+		body {
+			height: 100vh;
+		}
+		a,
+		p {
+			text-decoration: none;
+			all: unset;
+		}
+		.searchTitle {
+			font-size: 33px;
+			font-weight: 600;
+			color:black;
+			text-align: center;
+		}
+		.searchForm {
+			margin: 30px 20px;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			flex-direction: column;
+		}
+		.searchBar {
+			width: 100%;
+			height: 40px;
+			border-radius: 20px;
+			margin: 10px 0;
+		}
+		.searchBtn {
+			/* margin: 0 20px; */
+			padding: 10px 26px;
+			background-color: #357be1;
+			box-shadow: none;
+			color: #ffffff;
+			border-radius: 18px;
+			border: none;
+		}
 		.row {
 			margin-top: 40px;
 		}
@@ -38,42 +74,51 @@
 		.card-text {
 			font-size: 14px;
 		}
+		.recommendationTitle {
+			font-size: 33px;
+			font-weight: 500;
+			width: fit-content;
+		}
+
 	</style>
 	<body>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="text-white" style="font-size: 50px">Recommend Books</h1>
-					<form class="form" action="/recommend_books" method="post">
+					<div class="searchTitle">Find Your Books</div>
+					<form class="searchForm" action="/recommend_books" method="post">
 						<input
 							id="user_input"
 							name="user_input"
 							type="text"
-							class="form-control"
+							placeholder="Enter keyword (examples- bookname, year, author, publisher)"
+							class="form-control searchBar"
 						/><br />
 						<input
 							type="submit"
-							class="btn btn-lg btn-warning"
-							value="Submit"
+							class="searchBtn"
+							value="Search"
 						/>
 					</form>
 				</div>
-			</div>
-			<div class="title">
-				<h2 class="recommendation-title"></h2>
-				{% if same_year_books_by_name %} {% for book in same_year_books_by_name
-				%}
-				<div class="col-md-3" style="margin-top: 50px">
-					<div class="card">
-						<div class="card-body">
-							<img class="card-img-top" src="{{book[2]}}" />
-							<p class="card-title">{{book[0]}}</p>
-							<p class="card-title">{{book[1]}}</p>
+
+			{% for i in range(bookList|length) %}
+			<p class="recommendationTitle">{{bookList[i].title}}</p>
+			<div class="row">
+				{% for j in range(bookList[i].books|length) %}
+				<!-- <p>{{ (bookList[i].books)[j]['author'] }}</p> -->
+					<div class="col-3">
+						<div class="card" style="width: 18rem">
+							<img src="{{ (bookList[i].books)[j]['cover'] }}" class="card-img-top" alt="..." />
+							<div class="card-body">
+								<p class="card-title">{{(bookList[i].books)[j]['name'] }}</p>
+								<p class="card-text">{{ (bookList[i].books)[j]['author'] }}</p>
+							</div>
 						</div>
 					</div>
-				</div>
-				{% endfor %} {% endif %}
+				{% endfor %}
 			</div>
+			{% endfor %}
 		</div>
 	</body>
 </html>

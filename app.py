@@ -2,8 +2,9 @@ from flask import Flask,render_template, request
 import pickle
 import numpy as np
 
-from recommendations import getBooksYearlyByName
-
+from recommendations import getBooksYearly
+from recommendations import samePlaceBooks
+from recommendations import getAllRecommendations
 
 top_books = pickle.load(open('top_books.pkl', 'rb'))
 
@@ -26,16 +27,24 @@ def recommend():
     #TAKE INPUT: bookname
     #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
 
-    user_input = request.form.get('user_input')
-    book_name = request.form.get('user_input')
-    year = request.form.get('user_input')
-    same_year_books_by_name = getBooksYearlyByName(book_name)
+    #year data
+    #year_or_book = request.form.get("user_input")
+    #same_year_books = getBooksYearly(year_or_book)
+
+    #places data
+    #place = request.form.get("user-input")
+    #same_place_books = samePlaceBooks(place)
+
+    #result
+    #all_books = []
+    #all_books.append(same_year_books)
+    #all_books.append(same_place_books)
+    #print(all_books)
+
     
-
-    print(book_name)
-    print(same_year_books_by_name)
-
-    return render_template('searchBooks.html', same_year_books_by_name=same_year_books_by_name)
+    allResults = getAllRecommendations('1984')
+    print(allResults)
+    return render_template('searchBooks.html')
 
 # if __name__== '__main__':
 app.run(debug=True)

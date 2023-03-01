@@ -418,6 +418,7 @@ def getBooksYearly(year_or_book: int or str):
 # ## Books published at the given place
 
 # %%
+#location as input
 def samePlaceBooks(place):
     if place is not None:
         place = place.lower()
@@ -442,7 +443,42 @@ def samePlaceBooks(place):
         result_same_year_books = {"title": title, "result_books": result_books}
         return result_same_year_books
     else:
-        return "Invalid Entry"
+        return "Invalid Input"
 
+
+# %%
+#book name as input
+def samePlaceBooksByTitle(book_name):
+    if book_name is not None:
+        book_name = book_name.lower()
+
+        #check for book name
+        same_place_books = df_recommendation_dataset[df_recommendation_dataset['Book-Title'].str.lower().str.contains(book_name.lower())]
+        
+        #no books from the same year
+        if (len(same_place_books)== 0):
+            return "No books found with the similar title!"
+            
+    places = ((df_recommendation_dataset['City'].str.lower() == same_place_books.iloc[0]['City'].lower()) |
+                  (df_recommendation_dataset['State'].str.lower() == same_place_books.iloc[0]['State'].lower()) |
+                  (df_recommendation_dataset['Country'].str.lower() == same_place_books.iloc[0]['Country'].lower()))
+    
+    if places.any():
+        same_place_books = df_recommendation_dataset[places]
+        #top 5 rated books
+        same_place_books = same_place_books.sort_values(by = "Book-Rating", ascending=False)[:5]
+        same_place_books = same_place_books.drop_duplicates(subset=["Book-Title"])
+        result_books = []
+        for i, book in same_place_books.iterrows():
+            books_dict = {"book-name": book["Book-Title"], "book-author": book["Book-Author"], "book-image": book["Image-URL-M"]}
+            result_books.append(books_dict)
+    
+        title = "Trending books at the same location"
+
+        #result books 
+        result_same_year_books = {"title": title, "result_books": result_books}
+        return result_same_year_books
+    else:
+        return "Invalid Input"
 
 

@@ -190,10 +190,17 @@ def recommend():
     #all_books.append(same_place_books)
     #print(all_books)
 
+<<<<<<< HEAD
     
     # allResults = getAllRecommendations('1984')
     # print('allResults-------',allResults)
     # return render_template('searchBooks.html')
+=======
+    bookName = request.form.get("user-input")   
+    allResults = getAllRecommendations(bookName)
+    print(allResults)
+    return render_template('searchBooks.html')
+>>>>>>> 4956f03 (Add exception handling for no results)
 
 # if __name__== '__main__':
 app.run(debug=True)

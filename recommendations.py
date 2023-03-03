@@ -321,6 +321,7 @@ def create_book_lists_helper(title, books):
 #Recommend books by same author of the book with bookname as an input  
 def recommendation_by_same_author(bookname):
     booksList = []
+    bookname = bookname.lower()
     book_entry = df_author_recommendations[df_author_recommendations['Book-Title'].str.lower().str.contains(bookname)]
     if book_entry.empty:
         return create_book_lists_helper("Top Books with same author", booksList)
@@ -340,6 +341,7 @@ def recommendation_by_same_author(bookname):
 #Recommend books by same publisher of the book with bookname as an input  
 def recommendation_by_same_publisher(bookname):
     booksList = []
+    bookname = bookname.lower()
     book_entry = df_author_recommendations[df_author_recommendations['Book-Title'].str.lower().str.contains(bookname)]
     if book_entry.empty:
         return create_book_lists_helper("Top Books published by same publisher", booksList)
@@ -408,33 +410,6 @@ pickle.dump(df_pivot_table, open('pivot_table.pkl', 'wb'))
 pickle.dump(df_similarity_scores, open('similarity_scores.pkl', 'wb'))
 pickle.dump(df_books,open('books.pkl', 'wb'))
 
-# %%
-def collaborative_recommendation2(book_name):
-    import pickle
-    df_pivot_table = pickle.load(open('pivot_table.pkl', 'rb'))
-    df_similarity_scores = pickle.load(open('similarity_scores.pkl', 'rb'))
-    df_books = pickle.load(open('books.pkl','rb'))
-
-    booksList = []
-    array_size = np.where(df_pivot_table.index== book_name)[0]
-    if array_size.size == 0:
-        #return "Invalid"
-        return create_book_lists_helper("Top trending similar books", booksList)
-    book_index = np.where(df_pivot_table.index==book_name)[0][0]
-    similar_books = sorted(list(enumerate(df_similarity_scores[book_index])),key=lambda x:x[1],reverse=True)[1:5]
-    if len(similar_books) == 0:
-        return create_book_lists_helper("Top trending similar books", booksList)
-   
-    for book in similar_books:
-        temp_df = df_books[df_books['Book-Title'] == df_pivot_table.index[book[0]]]
-        book_title = temp_df.drop_duplicates('Book-Title')['Book-Title'].values
-        book_author = temp_df.drop_duplicates('Book-Title')['Book-Author'].values
-        cover_image = temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values
-        rBook = Book(book_title[0], cover_image[0], book_author[0])
-        booksList.append(rBook)
-    
-    return create_book_lists_helper("Top trending similar books", booksList)
-
 # %% [markdown]
 # ## Books Published Yearly
 
@@ -446,9 +421,9 @@ def getBooksYearly(year_or_book: int or str):
         year_of_publication = int(year_or_book)
         #valid year checking
         if (year_of_publication < 1300):
-            return "Invalid Year!"
+            return create_book_lists_helper("Trending books in the same year", booksList)
         elif (year_of_publication > 2022):
-            return "Sorry I don't have the data yet"
+            return create_book_lists_helper("Trending books in the same year", booksList)
         
         #filter books in the same year
         same_year_books = df_recommendation_dataset[df_recommendation_dataset['Year-Of-Publication'] == year_of_publication]
@@ -547,18 +522,12 @@ def results_in_json(finalRecommendations):
 # get Final results for all recommendations according to title
 def getAllRecommendations(bookname):
     finalRecommendations = []
-    finalRecommendations.append(collaborative_recommendation2(bookname))
+    finalRecommendations.append(collaborative_recommendation(bookname))
     finalRecommendations.append(recommendation_by_same_author(bookname))
     finalRecommendations.append(recommendation_by_same_publisher(bookname))
     finalRecommendations.append(getBooksYearly(bookname))
     finalRecommendations.append(samePlaceBooksByTitle(bookname))
 
     return results_in_json(finalRecommendations)
-
-# %%
-print(getAllRecommendations("The Handmaid's Tale"))
-
-# %%
-
 
 

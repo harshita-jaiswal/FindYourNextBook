@@ -12,68 +12,175 @@
 		/>
 	</head>
 	<style>
-		.row {
-			margin-top: 40px;
+		body {
+			height: 100vh;
 		}
-		.card {
-			height: 100%;
-			margin-bottom: 15px;
+		a,
+		p {
+			text-decoration: none;
+			all: unset;
+		}
+		.wrapper {
+			/* padding: 12px 40px; */
+		}
+		.header {
+			height: 13%;
+			padding: 18px 30px;
+			display: flex;
+			align-items: center;
+			justify-content: start;
+		}
+		.header-item {
+			margin-right: 20px;
+			font-size: 18px;
+			color: #000;
+			text-decoration: none;
+			cursor: pointer;
+			font-weight: 500;
+		}
+		.header-item:hover {
+			font-weight: 600;
+			transition: font-weight 0.5s;
+		}
+		.searchContainer {
+			background-color: #ededf5;
+			padding: 30px;
+			height: 25%;
+		}
+		.searchTitle {
+			font-size: 33px;
+			font-weight: 600;
+			color:black;
+			text-align: center;
+		}
+		.searchForm {
+			margin: 30px 20px;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			flex-direction: column;
+		}
+		.searchBar {
+			width: 100%;
+			height: 40px;
+			border-radius: 20px;
+			margin: 10px 0;
+		}
+		.searchBtn {
+			/* margin: 0 20px; */
+			padding: 10px 26px;
+			background-color: #357be1;
+			box-shadow: none;
+			color: #ffffff;
+			border-radius: 18px;
+			border: none;
+		}
+		.recommendedBooks {
+			margin: 35px 45px;
+			padding: 20px 0 40px;
+		}
+		.bookCategoryWrapper {
+			margin: 10px 0;
+		}
+		.recommendationTitle {
+			font-size: 33px;
+			font-weight: 500;
+			/* margin: 20px 0; */
+			width: fit-content;
+		}
+		.listContainer {
+			margin-top: 40px;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
+			overflow: scroll;
+		} 
+		.bookCard {
+			/* height: 100%; */
+			/* margin-bottom: 15px; */
+			border: 1px;
+			/* width: 27%; */
+			min-height: 350px;
+			flex: 1 0 15%;
+			max-width: 200px;
+			margin: 0 20px 15px 20px
 		}
 		.card-body {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-evenly;
+			max-width: 74%;
 		}
 		.card-img-top {
-			max-height: 250px;
+			min-width: 74%;
+    		height: 200px;
+
 		}
 		.card-title {
+			padding: 15px 0;
 			font-weight: 500;
-			font-size: 20px;
+			font-size: 18px;
 			display: block;
+			
 		}
 		.col-3 {
 			margin-bottom: 15px;
 		}
 		.card-text {
-			font-size: 14px;
+			font-size: 11px;
+			font-weight: 600;
 		}
 	</style>
 	<body>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<h1 class="text-white" style="font-size: 50px">Recommend Books</h1>
-					<form class="form" action="/recommend_books" method="post">
-						<input
-							id="user_input"
-							name="user_input"
-							type="text"
-							class="form-control"
-						/><br />
-						<input
-							type="submit"
-							class="btn btn-lg btn-warning"
-							value="Submit"
-						/>
-					</form>
-				</div>
+		<div class="wrapper">
+			<div class="header">
+				<p class="header-item">
+					<a class="header-link" aria-current="page" href="/">Home</a>
+				</p>
+				<p class="header-item">
+					<a class="header-link" href="/">Search</a>
+				</p>
+				<p class="header-item">
+					<a class="header-link" href="/#topBooks">Top 50 Books</a>
+				</p>
 			</div>
-			<div class="title">
-				<h2 class="recommendation-title"></h2>
-				{% if same_year_books_by_name %} {% for book in same_year_books_by_name
-				%}
-				<div class="col-md-3" style="margin-top: 50px">
-					<div class="card">
-						<div class="card-body">
-							<img class="card-img-top" src="{{book[2]}}" />
-							<p class="card-title">{{book[0]}}</p>
-							<p class="card-title">{{book[1]}}</p>
-						</div>
+			<div class="searchContainer">
+				<div class="searchTitle">Find Your Books</div>
+				<form class="searchForm" action="/recommend_books" method="post">
+					<input
+						id="user_input"
+						name="user_input"
+						type="text"
+						placeholder="Enter keyword (examples- bookname, year, author, publisher)"
+						class="form-control searchBar"
+					/><br />
+					<input
+						type="submit"
+						class="searchBtn"
+						value="Search"
+					/>
+				</form>
+			</div>
+			<div class="recommendedBooks">
+				{% for i in range(bookList|length) %}
+				<div class="bookCategoryWrapper">
+					<p class="recommendationTitle">{{bookList[i].title}}</p>
+					<div class="listContainer">
+						{% for j in range(bookList[i].books|length) %}
+								<div class="bookCard">
+									<img src="{{ (bookList[i].books)[j]['cover'] }}" class="card-img-top" alt="..." />
+									<div class="card-body">
+										<p class="card-title">{{(bookList[i].books)[j]['name'] }}</p>
+										<p class="card-text">Author: {{ (bookList[i].books)[j]['author'] }}</p>
+									</div>
+								</div>
+						{% endfor %}
 					</div>
 				</div>
-				{% endfor %} {% endif %}
+			{% endfor %}
 			</div>
 		</div>
+
 	</body>
 </html>

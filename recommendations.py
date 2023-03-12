@@ -557,11 +557,25 @@ def results_in_json(finalRecommendations):
 # get Final results for all recommendations according to title
 def getAllRecommendationsByBookName(name):
     finalRecommendations = []
-    finalRecommendations.append(collaborative_recommendation(name))
-    finalRecommendations.append(recommendation_by_same_author(name))
-    finalRecommendations.append(recommendation_by_same_publisher(name))
-    finalRecommendations.append(getBooksYearly(name))
-    finalRecommendations.append(samePlaceBooksByTitle(name))
+    results = collaborative_recommendation(name)
+    if len(results.books) > 0:
+        finalRecommendations.append(collaborative_recommendation(name))
+    results = recommendation_by_same_author(name)
+    if len(results.books) > 0:
+        finalRecommendations.append(recommendation_by_same_author(name))
+    results = recommendation_by_same_publisher(name)
+    if len(results.books) > 0:
+        finalRecommendations.append(recommendation_by_same_publisher(name))
+    results = getBooksYearly(name)
+    if len(results.books) > 0:
+        finalRecommendations.append(getBooksYearly(name))
+    results = samePlaceBooksByTitle(name)
+    if len(results.books) > 0:
+        finalRecommendations.append(samePlaceBooksByTitle(name))
+
+    if len(finalRecommendations) == 0:
+        finalRecommendations.append(create_book_lists_helper("No books found!",[]))
+    
     return results_in_json(finalRecommendations)
 
 def getAllRecommendationsByAuthorName(name):

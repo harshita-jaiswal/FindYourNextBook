@@ -12,7 +12,7 @@ class TestRecommendationsByAuthor(unittest.TestCase):
     def test_Author_By_AuthorName_NoResults_Success(self):
         input = 'askdjbfjhdasbc'
         results = getAllRecommendationsByAuthorName(input)
-        self.assertIn('oops!', results)
+        self.assertIn('oops! No author recommendations for the input', results)
 
 if __name__ == '__main__':
     unittest.main()

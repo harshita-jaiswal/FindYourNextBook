@@ -31,27 +31,27 @@ def recommend():
     #TAKE INPUT: bookname
     #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
 
-    bookName = request.form.get('user_input')
+    userInput = request.form.get('user_input')
     selectorValue = request.form.get('searchBy')
-    if len(str(bookName)) == 0:   
+    if len(str(userInput)) == 0:   
         return render_template('searchBooks.html')
     allResults = []
 
     match selectorValue:
         case "bookname":
-            allResults = json.loads(getAllRecommendationsByBookName(bookName))
+            allResults = json.loads(getAllRecommendationsByBookName(userInput))
         
         case "author":
-            allResults = json.loads(getAllRecommendationsByAuthorName(bookName))
+            allResults = json.loads(getAllRecommendationsByAuthorName(userInput))
 
         case "publisher":
-            allResults = json.loads(getAllRecommendationsByPublisherName(bookName))
+            allResults = json.loads(getAllRecommendationsByPublisherName(userInput))
 
         case "year":
-            allResults = json.loads(getAllRecommendationsByYear(bookName))
+            allResults = json.loads(getAllRecommendationsByYear(userInput))
 
         case "location":
-            allResults = json.loads(getAllRecommendationsByLocation(bookName))
+            allResults = json.loads(getAllRecommendationsByLocation(userInput))
 
     return render_template('searchBooks.html', bookList=allResults)
 

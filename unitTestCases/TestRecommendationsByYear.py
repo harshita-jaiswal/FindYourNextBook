@@ -1,7 +1,7 @@
 import unittest
 from recommendations import getBooksYearly
 
-class TestRecommendationsByPlace(unittest.TestCase):
+class TestRecommendationsByYear(unittest.TestCase):
     def test_valid_year(self):
         year = 2000
         result = getBooksYearly(year)

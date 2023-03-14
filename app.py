@@ -3,7 +3,11 @@ import pickle
 import numpy as np
 import json
 
-from recommendations import getAllRecommendations
+from recommendations import getAllRecommendationsByBookName
+from recommendations import getAllRecommendationsByAuthorName
+from recommendations import getAllRecommendationsByPublisherName
+from recommendations import getAllRecommendationsByYear
+from recommendations import getAllRecommendationsByLocation
 
 top_books = pickle.load(open('top_books.pkl', 'rb'))
 
@@ -27,10 +31,28 @@ def recommend():
     #TAKE INPUT: bookname
     #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
 
-    bookName = request.form.get('user_input')
-    if len(str(bookName)) == 0:   
+    userInput = request.form.get('user_input')
+    selectorValue = request.form.get('searchBy')
+    if len(str(userInput)) == 0:   
         return render_template('searchBooks.html')
-    allResults = json.loads(getAllRecommendations(bookName))
+    allResults = []
+
+    match selectorValue:
+        case "bookname":
+            allResults = json.loads(getAllRecommendationsByBookName(userInput))
+        
+        case "author":
+            allResults = json.loads(getAllRecommendationsByAuthorName(userInput))
+
+        case "publisher":
+            allResults = json.loads(getAllRecommendationsByPublisherName(userInput))
+
+        case "year":
+            allResults = json.loads(getAllRecommendationsByYear(userInput))
+
+        case "location":
+            allResults = json.loads(getAllRecommendationsByLocation(userInput))
+
     return render_template('searchBooks.html', bookList=allResults)
 
 

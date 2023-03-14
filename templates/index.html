@@ -1,164 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
+		<link href="{{ url_for('static', filename='base.css') }}" rel="stylesheet" />
+		<meta charset="UTF-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Book Recommendation System</title>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-			crossorigin="anonymous"
-		/>
+		<script src="jquery.js"></script> 
 	</head>
-	<style>
-		body {
-			height: 100vh;
-		}
-		a,
-		p {
-			text-decoration: none;
-			all: unset;
-		}
-		.header {
-			height: 10%;
-			padding: 12px 30px;
-			display: flex;
-			align-items: center;
-			justify-content: start;
-		}
-		.header-item {
-			margin-right: 20px;
-			font-size: 18px;
-			color: #000;
-			text-decoration: none;
-			cursor: pointer;
-			font-weight: 500;
-		}
-		.header-item:hover {
-			font-weight: 600;
-			transition: font-weight 0.5s;
-		}
-		.banner {
-			width: 100vw;
-			position: relative;
-			height: 75%;
-		}
-		.bannerImg {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-		.nextBtn {
-			top: 43%;
-			left: 42%;
-			opacity: 0.85;
-			position: absolute;
-			cursor: pointer;
-			box-shadow: 0px 0px 6px 22px rgb(0 0 0 / 75%);
-			background-color: rgba(0, 0, 0, 0.75);
-			box-sizing: border-box;
-		}
-		.nextBtn:hover {
-			opacity: 1;
-			transition: opacity 1s;
-		}
-		.btnText {
-			width: fit-content;
-			padding: 15px 25px;
-			margin: 0;
-			font-size: 26px;
-			font-weight: 600;
-			color: #ffffff;
-		}
-		.topBooks {
-			margin: 25px 40px;
-			padding: 20px 0 40px;
-		}
-		.title {
-			font-size: 33px;
-			font-weight: 500;
-			margin: auto;
-			width: fit-content;
-		}
-		.row {
-			margin-top: 40px;
-		}
-		.card {
-			height: 100%;
-			margin-bottom: 15px;
-		}
-		.card-body {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-evenly;
-		}
-		.card-img-top {
-			max-height: 250px;
-		}
-		.card-title {
-			font-weight: 500;
-			font-size: 20px;
-			display: block;
-		}
-		.col-3 {
-			margin-bottom: 15px;
-		}
-		.card-text {
-			font-size: 14px;
-		}
-		.seeMore {
-			padding: 10px 25px;
-			color: #ffffff;
-			background-color: #0d6efd;
-			width: fit-content;
-			border-radius: 16px;
-			margin: 15px auto;
-			cursor: pointer;
-		}
-		.seeMore:hover {
-			box-shadow: 0px 0px 3px 4px #dcdce1;
-			transition: box-shadow 2s;
-		}
-	</style>
 	<body>
-		<div class="header">
-			<p class="header-item">
-				<a class="header-link" aria-current="page" href="/">Home</a>
-			</p>
-			<p class="header-item">
-				<a class="header-link" href="/recommend">Search</a>
-			</p>
-			<p class="header-item">
-				<a class="header-link" href="#topBooks">Top 50 Books</a>
-			</p>
-		</div>
+		{% include 'header.html' %}
 		<div class="banner">
 			<img
 				class="bannerImg"
-				src="https://media.npr.org/assets/img/2022/11/19/bwl-fall-2022_wide-65b02ab152bdfc3add9804216881bb2605776498.jpg?s=700&c=85&f=jpeg"
-			/>
+				src="{{ url_for('static', filename='banner.jpg') }}"
+				/>
 			<div class="nextBtn">
 				<a class="btnText" href="/recommend">Find Your Next Book</a>
 			</div>
 		</div>
 		<div id="topBooks" class="topBooks">
 			<div class="title">Top 50 Books</div>
-			<div class="row">
+			<div class="listContainer">
 				{% for i in range(book_name|length) %}
-				<div class="col-3">
-					<div class="card" style="width: 18rem">
+					<div class="bookCard" style="width: 18rem">
 						<img src="{{ book_image[i] }}" class="card-img-top" alt="..." />
 						<div class="card-body">
 							<p class="card-title">{{ book_name[i] }}</p>
 							<p class="card-text">{{ book_author[i] }}</p>
 						</div>
 					</div>
-				</div>
 				{% endfor %}
 			</div>
-			<div class="seeMore">See More</div>-
+			<!-- <div class="seeMore">See More</div> -->
 		</div>
 	</body>
 </html>

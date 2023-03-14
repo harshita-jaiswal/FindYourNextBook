@@ -1,0 +1,115 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+a,
+p {
+    text-decoration: none;
+    all: unset;
+}
+
+.banner {
+    width: 100vw;
+    position: relative;
+    height: 75%;
+}
+.bannerImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.nextBtn {
+    top: 43%;
+    left: 42%;
+    opacity: 0.85;
+    position: absolute;
+    cursor: pointer;
+    box-shadow: 0px 0px 6px 22px rgb(0 0 0 / 75%);
+    background-color: rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+}
+.nextBtn:hover {
+    opacity: 1;
+    transition: opacity 1s;
+}
+.btnText {
+    width: fit-content;
+    padding: 15px 25px;
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: #ffffff;
+}
+.topBooks {
+    margin: 25px 40px;
+    padding: 20px 0 40px;
+}
+.title {
+    font-size: 33px;
+    font-weight: 500;
+    margin: auto;
+    width: fit-content;
+}
+.row {
+    margin-top: 40px;
+}
+.seeMore {
+    padding: 10px 25px;
+    color: #ffffff;
+    background-color: #0d6efd;
+    width: fit-content;
+    border-radius: 16px;
+    margin: 15px auto;
+    cursor: pointer;
+}
+.seeMore:hover {
+    box-shadow: 0px 0px 3px 4px #dcdce1;
+    transition: box-shadow 2s;
+}
+.listContainer {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    /* overflow: scroll; */
+    flex-wrap: wrap;
+} 
+.listContainer::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.bookCard {
+    border: 1px;
+    min-height: 350px;
+    flex: 1 0 15%;
+    max-width: 200px;
+    margin: 0 20px 15px 20px;
+    overflow: hidden;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    max-width: 74%;
+}
+.card-img-top {
+    min-width: 74%;
+    height: 200px;
+
+}
+.card-title {
+    padding: 15px 0;
+    font-weight: 500;
+    font-size: 18px;
+    display: block;
+    
+}
+.col-3 {
+    margin-bottom: 15px;
+}
+.card-text {
+    font-size: 11px;
+    font-weight: 600;
+}

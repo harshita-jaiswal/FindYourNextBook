@@ -27,9 +27,6 @@ def recommend_ui():
 
 @app.route('/recommend_books',methods=['post'])
 def recommend():
-    #TAKE INPUT: bookname
-    #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
-
     userInput = request.form.get('userInput')
     selectorValue = request.form.get('searchBy')
     if len(str(userInput)) == 0:   

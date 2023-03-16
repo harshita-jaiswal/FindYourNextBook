@@ -36,7 +36,7 @@ p {
 .card-img-top {
     min-width: 74%;
     height: 200px;
-
+    background-size: 30%;
 }
 .card-title {
     padding: 15px 0;

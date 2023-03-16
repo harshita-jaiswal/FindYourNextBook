@@ -12,11 +12,7 @@
 	</head>
 	<body>
 		{% include 'header.html' %}
-		<div class="banner">
-			<img
-				class="bannerImg"
-				src="{{ url_for('static', filename='banner.jpg') }}"
-				/>
+		<div class="banner" style="background: no-repeat center/100% url({{ url_for('static', filename='banner.jpg') }})">
 			<div class="nextBtn">
 				<a class="btnText" href="/recommend">Find Your Next Book</a>
 			</div>
@@ -34,7 +30,6 @@
 					</div>
 				{% endfor %}
 			</div>
-			<!-- <div class="seeMore">See More</div> -->
 		</div>
 	</body>
 </html>

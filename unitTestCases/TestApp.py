@@ -5,21 +5,23 @@ from app import app
 
 class TestApp(unittest.TestCase):
 
-    def create_app(self):
+    def setUp(self):
         app = Flask(__name__)
         app.config['TESTING'] = True
-        self.app = app
+        app.config['DEBUG'] = False
+        # self.app = app
+        self.app = app.test_client()
     
     def test_home(self):
         self.app.get('/')
-        self.assert_template_used('home.html')
-        self.assert_context("book_name", list)
-        self.assert_context("book_author", list)
-        self.assert_context("book_image", list)
+        self.assertTemplateUsed('home.html')
+        self.assertContext("book_name", list)
+        self.assertContext("book_author", list)
+        self.assertContext("book_image", list)
 
-    def test_recommend(self):
+    def test_recommend_ui(self):
         self.app.get('/recommend')
-        self.assert_template_used('searchBooks.html')
+        self.assertTemplateUsed('searchBooks.html')
 
     def test_recommend_books(self):
         self.app.get('/recommend_books')
@@ -27,10 +29,10 @@ class TestApp(unittest.TestCase):
             "searchBy": "author",
             "userInput": "J. K. Rowling"
         })
-        response = self.app.post('/recommend_books', headers={"Content-Type": "application/json"}, data=payload)
+        response = app.post('/recommend_books', data=payload)
         self.assertEqual(200, response.status_code)
-        self.assert_template_used('searchBooks.html')
-        self.assert_context("bookList", list)
+        self.assertTemplateUsed(response, 'searchBooks.html')
+        self.assertContext("bookList", list)
 
 if __name__ == '__main__':
     unittest.main()

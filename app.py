@@ -14,7 +14,7 @@ top_books = pickle.load(open('top_books.pkl', 'rb'))
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def home():
     print('top book----', top_books)
     return render_template('index.html',
     book_name = list(top_books['Book-Title'].values),

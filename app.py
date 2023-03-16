@@ -30,7 +30,7 @@ def recommend():
     #TAKE INPUT: bookname
     #display: similar trending books, books by same author, books by same publisher, books published in the same year, books published at same places
 
-    userInput = request.form.get('user_input')
+    userInput = request.form.get('userInput')
     selectorValue = request.form.get('searchBy')
     if len(str(userInput)) == 0:   
         return render_template('searchBooks.html')

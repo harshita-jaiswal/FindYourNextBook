@@ -1,38 +1,32 @@
 import unittest
-from flask import Flask
-import json
 from app import app
 
 class TestApp(unittest.TestCase):
 
     def setUp(self):
-        app = Flask(__name__)
-        app.config['TESTING'] = True
-        app.config['DEBUG'] = False
-        # self.app = app
         self.app = app.test_client()
-    
+
     def test_home(self):
-        self.app.get('/')
-        self.assertTemplateUsed('home.html')
-        self.assertContext("book_name", list)
-        self.assertContext("book_author", list)
-        self.assertContext("book_image", list)
+        response = self.app.get('/')
+        html = response.data.decode()
+        assert "<a class=\"btnText\" href=\"/recommend\">Find Your Next Book</a>" in html
+        self.assertEqual(response.status_code, 200)
 
     def test_recommend_ui(self):
-        self.app.get('/recommend')
-        self.assertTemplateUsed('searchBooks.html')
+        response = self.app.get('/recommend')
+        html = response.data.decode()
+        assert "<input type=\"submit\" class=\"searchBtn\" value=\"Search\" />" in html
+        self.assertEqual(response.status_code, 200)
 
-    def test_recommend_books(self):
-        self.app.get('/recommend_books')
-        payload = json.dumps({
+    def test_recommend(self):
+        payload = {
             "searchBy": "author",
             "userInput": "J. K. Rowling"
-        })
-        response = app.post('/recommend_books', data=payload)
-        self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'searchBooks.html')
-        self.assertContext("bookList", list)
+        }
+        response = self.app.post('/recommend_books', data=payload)
+        html = response.data.decode()
+        assert "<div class=\"bookCard\">" in html
+        self.assertEqual(response.status_code, 200)
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,9 +8,9 @@ from recommendations import getAllRecommendationsByAuthorName
 from recommendations import getAllRecommendationsByPublisherName
 from recommendations import getAllRecommendationsByYear
 from recommendations import getAllRecommendationsByLocation
-
+from recommendations import loadData
 top_books = pickle.load(open('top_books.pkl', 'rb'))
-
+loadData()
 app = Flask(__name__)
 
 @app.route('/')
